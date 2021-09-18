@@ -10,6 +10,17 @@ class ListAllUsersUseCase {
 
   execute({ user_id }: IRequest): User[] {
     // Complete aqui
+    const findUser = this.usersRepository.findById(user_id);
+    if (!findUser) {
+      throw new Error("User is not exists");
+    }
+
+    if (!findUser.admin) {
+      throw new Error("User is not admin");
+    }
+
+    const users = this.usersRepository.list();
+    return users;
   }
 }
 
